@@ -14,7 +14,7 @@ public class ProductService {
     ProductRepository productRepository;
     @Transactional
     public List<Product> getAllProducts(){
-        return productRepository.getAllProductWithSupplierDetail();
+        return productRepository.findAllByOrderByNameAsc();
     }
 
 }
