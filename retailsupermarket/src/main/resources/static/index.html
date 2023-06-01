@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .navbar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+        .navbar li {
+            float: left;
+        }
+        .navbar li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar li a:hover {
+            background-color: #111;
+        }
+    </style>
+</head>
+<body>
+
+<ul class="navbar">
+    <li><a href="#MUM Golden DomeMarket:::SRM System">MUM Golden DomeMarket:::SRM System</a></li>
+    <li><a href="#Product">Product</a></li>
+    <li><a href="#Supplier">Supplier</a></li>
+    <li><a href="#Hello">Hello</a></li>
+    <li><a href="#SignOut">SignOut</a></li>
+</ul>
+
+<div id="content">
+    <!-- Product list will appear here -->
+</div>
+
+<script>
+    document.querySelector('.navbar a[href="#Product"]').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        // Get the content div
+        var contentDiv = document.querySelector('#content');
+
+        // Clear the content div
+        contentDiv.innerHTML = '';
+
+        // Fetch the products from the API
+        fetch('http://localhost:9098/api/v1/product/')
+            .then(response => response.json())
+            .then(products => {
+                // Add each product to the content div
+                products.forEach(function(product) {
+                    var productElement = document.createElement('p');
+                    productElement.textContent = 'ID: ' + product.id +
+                        ', Name: ' + product.name +
+                        ', Unit price: ' + product.unitPrice +
+                        ', Quantity in stock: ' + product.quantityInStock +
+                        ', Date supplied: ' + product.dateSupplied +
+                        ', Supplier: ' + product.supplier.name;
+                    contentDiv.appendChild(productElement);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+
+
+</body>
+</html>
